@@ -1,6 +1,14 @@
 #------------------------------------------#
 # AWS Environment Values
 #------------------------------------------#
+variable "access_key" {
+    description = "AWS account access key ID"
+}
+
+variable "secret_key" {
+    description = "AWS account secret access key"
+}
+
 variable "region" {
     default     = "us-east-1"
     description = "The region of AWS, for AMI lookups."
@@ -16,7 +24,13 @@ variable "ami" {
 }
 
 variable "key_name" {
+    default = "rancher-example"
     description = "SSH key name in your AWS account for AWS instances."
+}
+
+variable "key_path" {
+    default = "~/.ssh/rancher-example"
+    description = "Local path of the SSH private key"
 }
 
 variable "instance_type" {
@@ -37,3 +51,7 @@ variable "vpc_cidr" {
 variable "db_password" {
     description = "Password for connecting to the rancher RDS database"
 }
+
+variable "cert_body" {}
+variable "cert_private_key" {}
+variable "cert_chain" {}

@@ -1,11 +1,16 @@
 #------------------------------------------#
 # EC2 Instance Configuration
 #------------------------------------------#
+resource "aws_key_pair" "rancher" {
+    key_name = "${var.key_name}"
+    public_key = "${file("${var.key_path}.pub")}"
+}
+
 resource "aws_instance" "rancher_ha_a" {
     ami                         = "${lookup(var.ami, var.region)}"
     instance_type               = "${var.instance_type}"
     availability_zone           = "${var.region}a"
-    key_name                    = "${var.key_name}"
+    key_name                    = "${aws_key_pair.rancher.key_name}"
     subnet_id                   = "${aws_subnet.rancher_ha_a.id}"
     security_groups             = ["${aws_security_group.rancher_ha.id}"]
     associate_public_ip_address = true
@@ -24,7 +29,7 @@ resource "aws_instance" "rancher_ha_b" {
     ami                         = "${lookup(var.ami, var.region)}"
     instance_type               = "${var.instance_type}"
     availability_zone           = "${var.region}b"
-    key_name                    = "${var.key_name}"
+    key_name                    = "${aws_key_pair.rancher.key_name}"
     subnet_id                   = "${aws_subnet.rancher_ha_b.id}"
     security_groups             = ["${aws_security_group.rancher_ha.id}"]
     associate_public_ip_address = true
@@ -43,7 +48,8 @@ resource "aws_instance" "rancher_ha_d" {
     ami                         = "${lookup(var.ami, var.region)}"
     instance_type               = "${var.instance_type}"
     availability_zone           = "${var.region}d"
-    key_name                    = "${var.key_name}"
+    key_name                    = "${aws_key_pair.rancher.key_name}"
+    subnet_id                   = "${aws_subnet.rancher_ha_b.id}"
     subnet_id                   = "${aws_subnet.rancher_ha_d.id}"
     security_groups             = ["${aws_security_group.rancher_ha.id}"]
     associate_public_ip_address = true
