@@ -1,36 +1,24 @@
 #------------------------------------------#
 # AWS Environment Values
 #------------------------------------------#
-variable "access_key" {
-    description = "AWS account access key ID"
-}
-
-variable "secret_key" {
-    description = "AWS account secret access key"
-}
-
 variable "region" {
     default     = "us-east-1"
-    description = "The region of AWS, for AMI lookups."
+    description = "The region of AWS, for AMI lookups"
+}
+
+variable "count" {
+    default     = "3"
+    description = "Number of HA servers to deploy"
 }
 
 variable "ami" {
-    description = "AWS RancherOS AMI ID"
-    default {
-        us-east-1 = "ami-880f12e2"
-        us-west-1 = "ami-ea7a058a"
-        us-west-2 = "ami-4f50a72f"
-    }
+    default     = "ami-dfdff3c8"
+    #default     = "ami-4d795c5a"
+    description = "Instance AMI ID"
 }
 
 variable "key_name" {
-    default = "rancher-example"
-    description = "SSH key name in your AWS account for AWS instances."
-}
-
-variable "key_path" {
-    default = "~/.ssh/rancher-example"
-    description = "Local path of the SSH private key"
+    description = "SSH key name in your AWS account for AWS instances"
 }
 
 variable "instance_type" {
@@ -40,18 +28,66 @@ variable "instance_type" {
 
 variable "tag_name" {
     default     = "rancher-ha"
-    description = "Name tag for the servers"
+    description = "Prefix for Name tag the servers"
+}
+
+variable "db_name" {
+    default     = "rancher"
+    description = "Name of the RDS DB"
+}
+
+variable "db_user" {
+    default     = "rancher"
+    description = "Username used to connect to the RDS database"
+}
+
+variable "db_pass" {
+    description = "Password used to connect to the RDS database"
+}
+
+variable "pre_install_script" {
+    default     = ""
+    description = "Script to run before running the Docker command to start Rancher"
+}
+
+variable "enable_https" {
+		default     = false
+    description = "Enable HTTPS termination on the loadbalancer"
+}
+
+variable "root_volume_size" {
+    default     = "16"
+    description = "Size in GB of the root volume for instances"
+}
+
+variable "rancher_version" {
+    default     = "latest"
+    description = "Rancher version to deploy"
+}
+
+variable "cert_body" {
+    default = ""
+}
+
+variable "cert_private_key" {
+    default = ""
+}
+
+variable "cert_chain" {
+    default = ""
 }
 
 variable "vpc_cidr" {
-    default     = "192.168.99.0/24"
+    default     = "192.168.199.0/24"
     description = "Subnet in CIDR format to assign to VPC"
 }
 
-variable "db_password" {
-    description = "Password for connecting to the rancher RDS database"
+variable "subnet_cidrs" {
+    default     = ["192.168.199.0/26", "192.168.199.64/26", "192.168.199.128/26"]
+    description = "Subnet ranges (requires 3 entries)"
 }
 
-variable "cert_body" {}
-variable "cert_private_key" {}
-variable "cert_chain" {}
+variable "availability_zones" {
+    default     = ["us-east-1a", "us-east-1b", "us-east-1d"]
+    description = "Availability zones to place subnets"
+}

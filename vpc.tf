@@ -1,8 +1,8 @@
 #------------------------------------------#
-# VPC Configuration
+# AWS VPC Configuration
 #------------------------------------------#
 resource "aws_vpc" "rancher_ha" {
-    cidr_block           = "192.168.99.0/24"
+    cidr_block           = "${var.vpc_cidr}"
     enable_dns_support   = true
     enable_dns_hostnames = true
     tags {
@@ -10,33 +10,14 @@ resource "aws_vpc" "rancher_ha" {
     }
 }
 
-resource "aws_subnet" "rancher_ha_a" {
+resource "aws_subnet" "rancher_ha" {
+    count                   = "3"
     vpc_id                  = "${aws_vpc.rancher_ha.id}"
-    cidr_block              = "192.168.99.0/25"
-    availability_zone       = "${var.region}a"
+    cidr_block              = "${element(var.subnet_cidrs, count.index)}"
+    availability_zone       = "${element(var.availability_zones, count.index)}"
     map_public_ip_on_launch = true
     tags {
-      Name = "${var.tag_name}-subnet-a"
-    }
-}
-
-resource "aws_subnet" "rancher_ha_b" {
-    vpc_id                  = "${aws_vpc.rancher_ha.id}"
-    cidr_block              = "192.168.99.128/26"
-    availability_zone       = "${var.region}b"
-    map_public_ip_on_launch = true
-    tags {
-      Name = "${var.tag_name}-subnet-b"
-    }
-}
-
-resource "aws_subnet" "rancher_ha_d" {
-    vpc_id                  = "${aws_vpc.rancher_ha.id}"
-    cidr_block              = "192.168.99.192/26"
-    availability_zone       = "${var.region}d"
-    map_public_ip_on_launch = true
-    tags {
-      Name = "${var.tag_name}-subnet-d"
+      Name = "${var.tag_name}-subnet-${count.index}"
     }
 }
 
@@ -53,4 +34,14 @@ resource "aws_route" "rancher_ha" {
     destination_cidr_block = "0.0.0.0/0"
     gateway_id             = "${aws_internet_gateway.rancher_ha.id}"
     depends_on             = ["aws_vpc.rancher_ha", "aws_internet_gateway.rancher_ha"]
+}
+
+resource "aws_vpc_dhcp_options" "rancher_dns" {
+    domain_name         = "ec2.internal"
+    domain_name_servers = ["169.254.169.253", "AmazonProvidedDNS"]
+}
+
+resource "aws_vpc_dhcp_options_association" "rancher_dns" {
+    vpc_id          = "${aws_vpc.rancher_ha.id}"
+    dhcp_options_id = "${aws_vpc_dhcp_options.rancher_dns.id}"
 }
