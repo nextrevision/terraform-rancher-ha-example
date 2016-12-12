@@ -70,4 +70,4 @@ terraform destroy
 * **cert_chain**: required if `enable_https` is set to `true`
 
 ### Rancher
-* **rancher_version**: Rancher version to deploy (default: `latest`)
+* **rancher_version**: Rancher version to deploy (default: `stable`)
