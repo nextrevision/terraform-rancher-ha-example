@@ -91,6 +91,6 @@ variable "cert_chain" {
 # Rancher Variables
 #------------------------------------------#
 variable "rancher_version" {
-    default     = "latest"
+    default     = "stable"
     description = "Rancher version to deploy"
 }
