@@ -1,5 +1,5 @@
 #------------------------------------------#
-# EC2 ASG Configuration
+# AWS EC2 Configuration
 #------------------------------------------#
 resource "aws_instance" "rancher_ha" {
     count                       = "${var.count}"
