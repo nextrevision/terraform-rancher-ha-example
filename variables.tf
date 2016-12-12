@@ -11,6 +11,11 @@ variable "count" {
     description = "Number of HA servers to deploy"
 }
 
+variable "tag_name" {
+    default     = "rancher-ha"
+    description = "Prefix for Name tag the servers"
+}
+
 variable "ami" {
     default     = "ami-dfdff3c8"
     description = "Instance AMI ID"
@@ -43,11 +48,6 @@ variable "subnet_cidrs" {
 variable "availability_zones" {
     default     = ["us-east-1a", "us-east-1b", "us-east-1d"]
     description = "Availability zones to place subnets"
-}
-
-variable "tag_name" {
-    default     = "rancher-ha"
-    description = "Prefix for Name tag the servers"
 }
 
 #------------------------------------------#
