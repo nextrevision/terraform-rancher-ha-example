@@ -1,5 +1,5 @@
 #------------------------------------------#
-# AWS Environment Values
+# AWS Environment Variables
 #------------------------------------------#
 variable "region" {
     default     = "us-east-1"
@@ -13,7 +13,6 @@ variable "count" {
 
 variable "ami" {
     default     = "ami-dfdff3c8"
-    #default     = "ami-4d795c5a"
     description = "Instance AMI ID"
 }
 
@@ -26,55 +25,9 @@ variable "instance_type" {
     description = "AWS Instance type"
 }
 
-variable "tag_name" {
-    default     = "rancher-ha"
-    description = "Prefix for Name tag the servers"
-}
-
-variable "db_name" {
-    default     = "rancher"
-    description = "Name of the RDS DB"
-}
-
-variable "db_user" {
-    default     = "rancher"
-    description = "Username used to connect to the RDS database"
-}
-
-variable "db_pass" {
-    description = "Password used to connect to the RDS database"
-}
-
-variable "pre_install_script" {
-    default     = ""
-    description = "Script to run before running the Docker command to start Rancher"
-}
-
-variable "enable_https" {
-		default     = false
-    description = "Enable HTTPS termination on the loadbalancer"
-}
-
 variable "root_volume_size" {
     default     = "16"
     description = "Size in GB of the root volume for instances"
-}
-
-variable "rancher_version" {
-    default     = "latest"
-    description = "Rancher version to deploy"
-}
-
-variable "cert_body" {
-    default = ""
-}
-
-variable "cert_private_key" {
-    default = ""
-}
-
-variable "cert_chain" {
-    default = ""
 }
 
 variable "vpc_cidr" {
@@ -90,4 +43,54 @@ variable "subnet_cidrs" {
 variable "availability_zones" {
     default     = ["us-east-1a", "us-east-1b", "us-east-1d"]
     description = "Availability zones to place subnets"
+}
+
+variable "tag_name" {
+    default     = "rancher-ha"
+    description = "Prefix for Name tag the servers"
+}
+
+#------------------------------------------#
+# Database Variables
+#------------------------------------------#
+variable "db_name" {
+    default     = "rancher"
+    description = "Name of the RDS DB"
+}
+
+variable "db_user" {
+    default     = "rancher"
+    description = "Username used to connect to the RDS database"
+}
+
+variable "db_pass" {
+    description = "Password used to connect to the RDS database"
+}
+
+#------------------------------------------#
+# SSL Variables
+#------------------------------------------#
+variable "enable_https" {
+		default     = false
+    description = "Enable HTTPS termination on the loadbalancer"
+}
+
+variable "cert_body" {
+    default = ""
+}
+
+variable "cert_private_key" {
+    default = ""
+}
+
+variable "cert_chain" {
+    default = ""
+}
+
+#------------------------------------------#
+# Rancher Variables
+#------------------------------------------#
+variable "rancher_version" {
+    default     = "latest"
+    description = "Rancher version to deploy"
 }
