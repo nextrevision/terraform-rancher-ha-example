@@ -12,7 +12,7 @@ resource "aws_instance" "rancher_ha" {
     vpc_security_group_ids = ["${aws_security_group.rancher_ha.id}"]
 
     tags {
-        Name = "${var.tag_name}-${count.index}"
+        Name = "${var.name_prefix}-${count.index}"
     }
 
     root_block_device {
@@ -54,7 +54,7 @@ data "template_file" "install" {
 }
 
 resource "aws_security_group" "rancher_ha" {
-    name        = "${var.tag_name}-server"
+    name        = "${var.name_prefix}-server"
     description = "Rancher HA Server Ports"
     vpc_id      = "${aws_vpc.rancher_ha.id}"
 

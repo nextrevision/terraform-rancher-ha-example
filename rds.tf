@@ -3,7 +3,7 @@
 #------------------------------------------#
 resource "aws_rds_cluster_instance" "rancher_ha" {
     count                = 2
-    identifier           = "${var.tag_name}-db-${count.index}"
+    identifier           = "${var.name_prefix}-db-${count.index}"
     cluster_identifier   = "${aws_rds_cluster.rancher_ha.id}"
     instance_class       = "db.r3.large"
     publicly_accessible  = false
@@ -11,7 +11,7 @@ resource "aws_rds_cluster_instance" "rancher_ha" {
 }
 
 resource "aws_rds_cluster" "rancher_ha" {
-    cluster_identifier     = "${var.tag_name}-db"
+    cluster_identifier     = "${var.name_prefix}-db"
     database_name          = "${var.db_name}"
     master_username        = "${var.db_user}"
     master_password        = "${var.db_pass}"
@@ -20,16 +20,16 @@ resource "aws_rds_cluster" "rancher_ha" {
 }
 
 resource "aws_db_subnet_group" "rancher_ha" {
-    name        = "${var.tag_name}-db-subnet-group"
+    name        = "${var.name_prefix}-db-subnet-group"
     description = "Rancher HA Subnet Group"
     subnet_ids  = ["${aws_subnet.rancher_ha.*.id}"]
     tags {
-        Name = "${var.tag_name}-db-subnet-group"
+        Name = "${var.name_prefix}-db-subnet-group"
     }
 }
 
 resource "aws_security_group" "rancher_ha_rds" {
-    name        = "${var.tag_name}-rds-secgroup"
+    name        = "${var.name_prefix}-rds-secgroup"
     description = "Rancher RDS Ports"
     vpc_id      = "${aws_vpc.rancher_ha.id}"
 

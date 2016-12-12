@@ -3,7 +3,7 @@
 #------------------------------------------#
 resource "aws_elb" "rancher_ha_https" {
     count                       = "${var.enable_https}"
-    name                        = "${var.tag_name}-elb-https"
+    name                        = "${var.name_prefix}-elb-https"
     internal                    = false
     idle_timeout                = 60
     connection_draining         = true
@@ -35,7 +35,7 @@ resource "aws_elb" "rancher_ha_https" {
     }
 
     tags {
-        Name = "${var.tag_name}-elb-https"
+        Name = "${var.name_prefix}-elb-https"
     }
 }
 
@@ -47,7 +47,7 @@ resource "aws_proxy_protocol_policy" "https" {
 
 resource "aws_iam_server_certificate" "rancher_ha" {
     count             = "${var.enable_https}"
-    name              = "${var.tag_name}-certificate"
+    name              = "${var.name_prefix}-certificate"
     certificate_body  = "${file("${var.cert_body}")}"
     private_key       = "${file("${var.cert_private_key}")}"
     certificate_chain = "${file("${var.cert_chain}")}"
@@ -55,7 +55,7 @@ resource "aws_iam_server_certificate" "rancher_ha" {
 
 resource "aws_security_group" "rancher_ha_elb_https" {
     count       = "${var.enable_https}"
-    name        = "${var.tag_name}-elb-https"
+    name        = "${var.name_prefix}-elb-https"
     description = "Rancher HA Public HTTPS Traffic"
     vpc_id      = "${aws_vpc.rancher_ha.id}"
 

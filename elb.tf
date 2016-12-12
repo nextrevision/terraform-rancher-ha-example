@@ -2,7 +2,7 @@
 # Elastic Load Balancer Configuration
 #------------------------------------------#
 resource "aws_security_group" "rancher_ha_elb" {
-    name        = "${var.tag_name}-elb-default"
+    name        = "${var.name_prefix}-elb-default"
     description = "Rancher HA ELB Common Traffic"
     vpc_id      = "${aws_vpc.rancher_ha.id}"
 

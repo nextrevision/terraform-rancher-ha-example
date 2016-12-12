@@ -6,7 +6,7 @@ resource "aws_vpc" "rancher_ha" {
     enable_dns_support   = true
     enable_dns_hostnames = true
     tags {
-        Name = "${var.tag_name}-vpc"
+        Name = "${var.name_prefix}-vpc"
     }
 }
 
@@ -17,7 +17,7 @@ resource "aws_subnet" "rancher_ha" {
     availability_zone       = "${element(var.availability_zones, count.index)}"
     map_public_ip_on_launch = true
     tags {
-      Name = "${var.tag_name}-subnet-${count.index}"
+      Name = "${var.name_prefix}-subnet-${count.index}"
     }
 }
 
@@ -25,7 +25,7 @@ resource "aws_internet_gateway" "rancher_ha" {
     vpc_id     = "${aws_vpc.rancher_ha.id}"
     depends_on = ["aws_vpc.rancher_ha"]
     tags {
-      Name = "${var.tag_name}-igw"
+      Name = "${var.name_prefix}-igw"
     }
 }
 

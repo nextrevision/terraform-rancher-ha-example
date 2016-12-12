@@ -11,9 +11,9 @@ variable "count" {
     description = "Number of HA servers to deploy"
 }
 
-variable "tag_name" {
+variable "name_prefix" {
     default     = "rancher-ha"
-    description = "Prefix for Name tag the servers"
+    description = "Prefix for all AWS resource names"
 }
 
 variable "ami" {
@@ -71,7 +71,7 @@ variable "db_pass" {
 # SSL Variables
 #------------------------------------------#
 variable "enable_https" {
-		default     = false
+    default     = false
     description = "Enable HTTPS termination on the loadbalancer"
 }
 

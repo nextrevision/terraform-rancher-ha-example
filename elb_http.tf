@@ -3,7 +3,7 @@
 #------------------------------------------#
 resource "aws_elb" "rancher_ha_http" {
     count                       = "${1 - var.enable_https}"
-    name                        = "${var.tag_name}-elb"
+    name                        = "${var.name_prefix}-elb"
     internal                    = false
     idle_timeout                = 60
     connection_draining         = true
@@ -34,7 +34,7 @@ resource "aws_elb" "rancher_ha_http" {
     }
 
     tags {
-        Name = "${var.tag_name}-elb"
+        Name = "${var.name_prefix}-elb"
     }
 }
 
@@ -46,7 +46,7 @@ resource "aws_proxy_protocol_policy" "http" {
 
 resource "aws_security_group" "rancher_ha_elb_http" {
     count       = "${1 - var.enable_https}"
-    name        = "${var.tag_name}-elb-http"
+    name        = "${var.name_prefix}-elb-http"
     description = "Rancher HA Public HTTP Traffic"
     vpc_id      = "${aws_vpc.rancher_ha.id}"
 
