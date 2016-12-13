@@ -58,6 +58,8 @@ terraform destroy
 * **subnet_cidrs**: list of subnet ranges (3 required) (default: `["192.168.199.0/26", "192.168.199.64/26", "192.168.199.128/26"`)
 * **availability_zones**: AZs for placing instances and subnets (may change based on your account's availability) (default: `["us-east-1a", "us-east-1b", "us-east-1d"]`)
 
+> Note: if you use an AMI other than RancherOS, the automatic launching of the Rancher server container will not work. You will need to update the user-data template according to the needs of your AMI.
+
 ### Database
 * **db_name**: name of the RDS DB (default: `rancher`)
 * **db_user**: username used to connect to the RDS database (default: `rancher`)

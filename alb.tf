@@ -33,32 +33,31 @@ resource "aws_security_group" "rancher_ha_alb" {
     name        = "${var.name_prefix}-alb-default"
     description = "Rancher HA ALB Common Traffic"
     vpc_id      = "${aws_vpc.rancher_ha.id}"
+}
 
-    ingress {
-        from_port = 0
-        to_port   = 65535
-        protocol  = "tcp"
-        self      = true
-    }
+resource "aws_security_group_rule" "allow_all_self" {
+    type              = "ingress"
+    from_port         = 0
+    to_port           = 0
+    protocol          = "-1"
+    self              = true
+    security_group_id = "${aws_security_group.rancher_ha_alb.id}"
+}
 
-    ingress {
-        from_port = 0
-        to_port   = 65535
-        protocol  = "udp"
-        self      = true
-    }
+resource "aws_security_group_rule" "allow_icmp" {
+    type              = "ingress"
+    from_port         = 0
+    to_port           = 0
+    protocol          = "icmp"
+    cidr_blocks       = ["0.0.0.0/0"]
+    security_group_id = "${aws_security_group.rancher_ha_alb.id}"
+}
 
-    ingress {
-        from_port   = -1
-        to_port     = -1
-        protocol    = "icmp"
-        cidr_blocks = ["0.0.0.0/0"]
-    }
-
-    egress {
-        from_port   = 0
-        to_port     = 0
-        protocol    = "-1"
-        cidr_blocks = ["0.0.0.0/0"]
-    }
+resource "aws_security_group_rule" "allow_all_out" {
+    type              = "egress"
+    from_port         = 0
+    to_port           = 0
+    protocol          = "-1"
+    cidr_blocks       = ["0.0.0.0/0"]
+    security_group_id = "${aws_security_group.rancher_ha_alb.id}"
 }
