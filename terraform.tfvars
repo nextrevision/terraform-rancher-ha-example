@@ -9,4 +9,3 @@ db_pass = "rancherdbpass"
 #cert_body = "certs/cert1.pem"              # Signed Certificate
 #cert_private_key = "certs/privkey1.pem"    # Certificate Private Key
 #cert_chain = "certs/chain1.pem"            # CA chain
-
