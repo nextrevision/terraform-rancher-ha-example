@@ -5,7 +5,7 @@ Terraform files for deploying a Rancher HA cluster in AWS
 
 These files are meant as a companion to the following blog post:
 
-[https://thisendout.com/2016/11/10/update-deploying-rancher-in-production-aws-terraform-rancheros/](https://thisendout.com/2016/11/10/update-deploying-rancher-in-production-aws-terraform-rancheros/)
+[https://thisendout.com/2016/12/10/update-deploying-rancher-in-production-aws-terraform-rancheros/](https://thisendout.com/2016/12/10/update-deploying-rancher-in-production-aws-terraform-rancheros/)
 
 ## Usage
 
