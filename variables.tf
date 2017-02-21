@@ -50,6 +50,11 @@ variable "availability_zones" {
     description = "Availability zones to place subnets"
 }
 
+variable "internal_elb" {
+    default     = "false"
+    description = "Force the ELB to be internal only"
+}
+
 #------------------------------------------#
 # Database Variables
 #------------------------------------------#

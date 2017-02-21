@@ -57,6 +57,7 @@ terraform destroy
 * **vpc_cidr**: subnet in CIDR format to assign to the VPC (default: `192.168.199.0/24`)
 * **subnet_cidrs**: list of subnet ranges (3 required) (default: `["192.168.199.0/26", "192.168.199.64/26", "192.168.199.128/26"`)
 * **availability_zones**: AZs for placing instances and subnets (may change based on your account's availability) (default: `["us-east-1a", "us-east-1b", "us-east-1d"]`)
+* **internal_elb**: Make ELB internal to VPC vs externally accessible (default: `false`)
 
 > Note: if you use an AMI other than RancherOS, the automatic launching of the Rancher server container will not work. You will need to update the user-data template according to the needs of your AMI.
 
