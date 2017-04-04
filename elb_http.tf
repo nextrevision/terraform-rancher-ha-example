@@ -37,7 +37,7 @@ resource "aws_elb" "rancher_ha_http" {
 
 resource "aws_proxy_protocol_policy" "rancher_ha_http_proxy_policy" {
     count          = "${1 - var.enable_https}"
-    load_balancer  = "${aws_elb.rancher_ha_https.name}"
+    load_balancer  = "${aws_elb.rancher_ha_http.name}"
     instance_ports = ["80", "81", "8080"]
 }
 
