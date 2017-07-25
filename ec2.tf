@@ -45,7 +45,7 @@ data "template_file" "install" {
 
     vars {
         rancher_version = "${var.rancher_version}"
-        db_host         = "${aws_rds_cluster.rancher_ha.endpoint}"
+        db_host         = "${aws_rds_cluster.rancher_ha.address}"
         db_name         = "${aws_rds_cluster.rancher_ha.database_name}"
         db_port         = "${aws_rds_cluster.rancher_ha.port}"
         db_user         = "${var.db_user}"
